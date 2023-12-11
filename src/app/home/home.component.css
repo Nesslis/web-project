@@ -1,0 +1,34 @@
+/* Add your custom styles here */
+
+.background {
+    position: relative;
+    height: 100vh;
+    background-image: url('../images/ocean-sand-beach-uhd-4k-wallpaper.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+  }
+  
+  .background::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity here */
+  }
+  
+  .background h1,
+  .background p {
+    z-index: 1;
+  }
+  .background hr {
+    border: none; /* Mevcut sınırı kaldırın */
+    height: 3px; /* Çizginin kalınlığı */
+    background-color: white; /* Beyaz renk */
+    margin-top: 20px; /* İstenilen mesafe için üst boşluk */
+  }
+  
