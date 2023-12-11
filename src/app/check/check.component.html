@@ -1,0 +1,21 @@
+<div>
+    <h2>Check Existing Customer</h2>
+    <form [formGroup]="checkForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="tcNo">TC No:</label>
+        <input type="text" id="tcNo" formControlName="tcNo" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-primary">Check</button>
+    </form>
+
+    <div *ngIf="existingCustomer">
+        <h3>Existing Customer Details</h3>
+        <p>Customer Name: {{ existingCustomer.firstName }} {{ existingCustomer.lastName }}</p>
+        <!-- Display other customer details as needed -->
+      </div>
+  </div>
+  
