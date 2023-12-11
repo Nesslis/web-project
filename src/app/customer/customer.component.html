@@ -1,0 +1,82 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="page-wrapper">
+<div class="form-container">
+
+<form [formGroup]="customerForm" (ngSubmit)="onSubmit()" class="my-4">
+  <h2>Create Customer</h2>
+  <div class="mb-3">
+    <label for="id" class="form-label">Id:</label>
+    <input type="text" id="id" formControlName="id" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="tcNo" class="form-label">Tc No:</label>
+    <input type="text" id="tcNo" formControlName="tcNo" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="passportNo" class="form-label">Passport No:</label>
+    <input type="text" id="passportNo" formControlName="passportNo" class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="nationality" class="form-label">Nationality:</label>
+    <input type="text" id="nationality" formControlName="nationality" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="firstName" class="form-label">First Name:</label>
+    <input type="text" id="firstName" formControlName="firstName" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name:</label>
+    <input type="text" id="lastName" formControlName="lastName" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="middleName" class="form-label">Middle Name:</label>
+    <input type="text" id="middleName" formControlName="middleName" class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="gender" class="form-label">Gender:</label>
+    <input type="number" id="gender" formControlName="gender" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="streetAddress" class="form-label">Address:</label>
+    <input type="text" id="streetAddress" formControlName="streetAddress" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="city" class="form-label">City:</label>
+    <input type="text" id="city" formControlName="city" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="country" class="form-label">Country:</label>
+    <input type="text" id="country" formControlName="country" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="email" class="form-label">Email:</label>
+    <input type="email" id="email" formControlName="email" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="phone" class="form-label">Phone:</label>
+    <input type="text" id="phone" formControlName="phone" required class="form-control">
+  </div>
+
+  <div class="mb-3">
+    <label for="notes" class="form-label">Notes:</label>
+    <input type="text" id="notes" formControlName="notes" required class="form-control">
+  </div>
+
+  <button type="submit" class="btn btn-primary" [disabled]="!customerForm.valid">Create Customer</button>
+</form>
+
+</div>
+</div>
