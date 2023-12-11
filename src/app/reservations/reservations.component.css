@@ -1,0 +1,65 @@
+body {
+    background-color: #80a1e9;
+    margin: 0;
+    padding: 0;
+    color: white;
+  }
+  
+  .container {
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .table-responsive {
+    margin-top: 20px;
+  }
+  .table th,
+  .table td {
+    vertical-align: middle;
+  }
+  
+  .table th {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  .table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  .table tbody tr td:last-child {
+    white-space: nowrap;
+  }
+  
+  .btn-primary {
+    margin-top: 5px;
+  }
+  
+  .fa-note-sticky::before {
+    content: "\f72f"; /* Use the appropriate Unicode for the sticky note icon */
+    font-family: "Font Awesome 6 Solid";
+  }
+  .circle {
+    position: absolute;
+    background-color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .circle:nth-child(1) {
+    top: 20%;
+    left: 20%;
+  }
+  
+  .circle:nth-child(2) {
+    top: 50%;
+    left: 70%;
+  }
+  .page-wrapper {
+    background: linear-gradient(to bottom, #0c344f, #bacff0);
+    min-height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Change the font-family if needed */
+    color: white;
+  }
