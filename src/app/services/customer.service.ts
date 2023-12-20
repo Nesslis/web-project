@@ -1,72 +1,74 @@
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { Duplicate } from '../common/duplicate';
+import { AppError } from '../common/apperror';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CustomerService {
+  private apiUrl = 'http://213.248.166.144:7070/customer/lastReservations';
+  private apiUrlCreate = 'http://213.248.166.144:7070/customer/createCustomer';
+  private apiUrlGetCustomer = 'http://213.248.166.144:7070/customer/getCustomerByTcNoEmail';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  addCustomer = async (
-    id: number,
-    tcNo: string | null,
-    passportNo: string | null,
-    nationality: string | null,
-    firstName: string,
-    lastName: string,
-    middleName: string | null,
-    gender: number | null,
-    streetAddress: string | null,
-    city: string | null,
-    country: string | null,
-    email: string,
-    phone: string,
-    notes: string | null,
-  ) => {
-    try {
-      const apiUrl = 'http://213.248.166.144:7070'; 
-      const headers = new HttpHeaders().set('Content-Type', 'application/json');
+  createCustomer(customerData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrlCreate, customerData).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 409) {
+          return throwError(() => new Duplicate());
+          console.error("aaaaaaaaaaaaaaa")
+        } else {
+          return throwError(() => new AppError());
+        }
+      })
+    );
+  }
 
-      const body = {
-        id,
-        tcNo,
-        passportNo,
-        nationality,
-        firstName,
-        lastName,
-        middleName,
-        gender,
-        streetAddress,
-        city,
-        country,
-        email,
-        phone,
-        notes
-      };
-      let body1 = {
-        id : 0,
-        tcNo : "string",
-        passportNo : "string",
-        nationality: "string",
-        firstName: "string",
-        lastName: "string",
-        middleName: "string",
-        gender : 0,
-        streetAddress: "string",
-        city : "string",
-        country: "string",
-        email: "string@gmail.com",
-        phone: "string",
-        notes: "string"
+  getCustomerByTcNoEmail(tcNo: string, email: string): Promise<any> {
+    let params = new HttpParams();
+    if (tcNo) params = params.append('tcNo', tcNo);
+    if (email) params = params.append('email', email);
 
-      }
-      
+    return this.http.get<any>(this.apiUrlGetCustomer, { params }).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 409) {
+          return throwError(() => new Duplicate());
+        } else {
+          return throwError(() => new AppError());
+        }
+      })
+    ).toPromise();
+  }
 
-      const result = await this.http.post(`${apiUrl}/customer/createCustomer`,body , { headers }).toPromise();
-      return result;
-    } catch (e) {
-      return { error: true, msg: (e as any).error };
-    }
+  async getAllReservations(): Promise<any[]> {
+    return new Promise<any[]>((resolve, reject) => {
+      let reservationlist: any[] = [];
+      this.http.get<any>(this.apiUrl).subscribe(
+        (response) => {
+          if (!response) {
+            reject();
+          } else {
+            const oneWeekInSeconds = 7 * 24 * 60 * 60 * 1000;
+            const oneWeekAgo = new Date();
+            oneWeekAgo.setTime(oneWeekAgo.getTime() - oneWeekInSeconds);
+
+            Object.values(response).forEach((value: any) => {
+              const reservationDate = new Date(value['dateArrival']);
+              if (reservationDate.getTime() > oneWeekAgo.getTime()) {
+                reservationlist.push(value); 
+              }
+            });
+            resolve(reservationlist);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
   }
 }

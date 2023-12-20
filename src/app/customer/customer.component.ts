@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomerService } from '../services/customer.service';
+import { Duplicate } from '../common/duplicate';
+import { AppError } from '../common/apperror';
 
 @Component({
   selector: 'app-customer-register-form',
@@ -9,8 +11,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CustomerComponent {
   customerForm: FormGroup;
+  errorMessage: string | null = null;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private customerService: CustomerService
+  ) {
     this.customerForm = this.formBuilder.group({
       id: ['', Validators.required],
       tcNo: ['', Validators.required],
@@ -27,50 +33,44 @@ export class CustomerComponent {
       phone: ['', Validators.required],
       notes: ['', Validators.required],
     });
+
   }
 
-  checkExistingCustomer() {
-    const customerData = this.customerForm.value;
-    const { tcNo, email } = customerData;
-  
-    let payload = {};
-    if (tcNo && email) {
-      payload = { tcNo, email };
-    } else if (tcNo) {
-      payload = { tcNo };
-    } else if (email) {
-      payload = { email };
-    } else {
-      return;
-    }
-  
-    this.http.post('http://213.248.166.144:7070/customer/getCustomerByTcNoEmail', payload)
-      .subscribe(
-        (response) => {
-          console.log('Existing customer found:', response);
-        },
-        (error) => {
-          console.error('Error while checking existing customer:', error);
-          if (error.status === 409) {
-            // Show an error message to the user about the existing customer
+  async onSubmit(): Promise<void> {
+    if (this.customerForm.valid) {
+      const tcNo = this.customerForm.value.tcNo;
+      const email = this.customerForm.value.email;
+
+      this.errorMessage = null;
+
+        const existingCustomer = await this.customerService.getCustomerByTcNoEmail(tcNo, email)
+        .catch((error) => {
+          if(error instanceof AppError){
+            this.errorMessage='Customer control failed';
+            console.error('Customer control failed',error)
+          }
+        });
+
+        if (!existingCustomer) {
+          this.errorMessage = "Customer already exists";
+        } else {
+          const customerData = this.customerForm.value;
+          const createdCustomer = await this.customerService.createCustomer(customerData).toPromise()
+          .catch((createError)=> {
+            if(createError instanceof Duplicate){
+              this.errorMessage= "Customer already exists";
+            }else if(createError instanceof AppError){
+              console.error("There is an error ",createError)
+            }
+          });
+
+          if (createdCustomer) {
+            console.log("Customer added")
           }
         }
-      );
+
+    } else {
+      this.errorMessage = 'Please fill in all required fields correctly.';
+    }
   }
-  
-
-  onSubmit() {
-    this.checkExistingCustomer();
-
-    const customerData = this.customerForm.value;
-
-    this.http.post('http://213.248.166.144:7070/customer/createCustomer', customerData)
-      .subscribe(
-        (response) => {
-          console.log('Customer created successfully:', response);
-        },
-      );
-  }
-  
-  
 }
