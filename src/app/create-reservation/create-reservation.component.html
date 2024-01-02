@@ -1,0 +1,45 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+
+<div class="page-wrapper">
+    <div class="form-container">
+
+<form (ngSubmit)="createReservation()" class="reservation-form" class="my-4">
+    <label for="Id">Id:</label>
+    <input type="text" id="roomType" [(ngModel)]="reservationData.id" [ngModelOptions]="{standalone: true}">
+    
+    <label for="customerId">Customer Id:</label>
+    <input type="text" id="roomType" [(ngModel)]="reservationData.customerId" [ngModelOptions]="{standalone: true}">
+
+    <label for="roomType">Room Type:</label>
+    <select id="roomTypeSelect" [(ngModel)]="reservationData.roomType" name="roomType" [ngModelOptions]="{standalone: true}">
+        <option value="double">Double</option>
+        <option value="triple">Triple</option>
+      </select>  
+    <label for="room">Room:</label>
+    <select id="room" [(ngModel)]="reservationData.room" name="roomType" [ngModelOptions]="{standalone: true}">
+        <option value="101">101</option>
+        <option value="202">202</option>
+      </select>
+  
+    <label for="dateArrival">Arrival Date:</label>
+    <input type="datetime-local" id="dateArrival" [(ngModel)]="reservationData.dateArrival">
+  
+    <label for="dateDeparture">Departure Date:</label>
+    <input type="datetime-local" id="dateDeparture" [(ngModel)]="reservationData.dateDeparture">
+  
+    <label for="notes">Notes:</label>
+    <textarea id="notes" [(ngModel)]="reservationData.notes"></textarea>
+  
+    <label for="source">Source:</label>
+    <input type="text" id="source" [(ngModel)]="reservationData.source">
+  
+    <label for="paymentAmount">Payment Amount:</label>
+    <input type="number" id="paymentAmount" [(ngModel)]="reservationData.paymentAmount">
+  
+    <label for="status">Status:</label>
+    <input type="text" id="status" [(ngModel)]="reservationData.status">
+  
+    <button type="submit" class="btn btn-primary">Create Reservation</button>
+  </form>
+    </div>
+    </div>

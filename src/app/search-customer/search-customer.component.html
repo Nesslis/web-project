@@ -1,0 +1,35 @@
+<div class="page-wrapper">
+    <div class="search-container">
+        <input type="number" [(ngModel)]="customerId" placeholder="Customer ID">
+        <input type="text" [(ngModel)]="firstName" placeholder="First Name">
+        <input type="text" [(ngModel)]="lastName" placeholder="Last Name">
+        <button (click)="searchCustomers()">Search</button>
+      </div>
+  
+  <div class="results-container" *ngIf="searchResults.length > 0">
+    <h2>Search Results</h2>
+    <ul>
+      <li *ngFor="let customer of searchResults">
+        <div class="customer-details">
+          <p><strong>ID:</strong> {{ customer.id }}</p>
+          <p><strong>TC No:</strong> {{ customer.tcNo }}</p>
+          <p><strong>Passport No:</strong> {{ customer.passportNo }}</p>
+          <p><strong>Nationality:</strong> {{ customer.nationality }}</p>
+          <p><strong>First Name:</strong> {{ customer.firstName }}</p>
+          <p><strong>Last Name:</strong> {{ customer.lastName }}</p>
+          <p><strong>Middle Name:</strong> {{ customer.lastName }}</p>
+          <p><strong>Street Address:</strong> {{ customer.lastName }}</p>
+          <p><strong>City:</strong> {{ customer.lastName }}</p>
+          <p><strong>Country:</strong> {{ customer.lastName }}</p>
+          <p><strong>Email:</strong> {{ customer.lastName }}</p>
+          <p><strong>Phone:</strong> {{ customer.lastName }}</p>
+          <p><strong>Notes:</strong> {{ customer.lastName }}</p>
+          <button (click)="selectCustomer(customer)" class="button">Select</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="results-container" *ngIf="searchResults.length==0">
+    <h2>There is no customer</h2>
+  </div>
+</div>
