@@ -12,8 +12,8 @@ export class CreateReservationComponent {
     customerId: 0,
     roomType: '',
     room: '',
-    dateArrival: new Date().toISOString(), // Default value for arrival date
-    dateDeparture: new Date().toISOString(), // Default value for departure date
+    dateArrival: new Date().toISOString(), 
+    dateDeparture: new Date().toISOString(),
     notes: '',
     source: '',
     paymentAmount: 0,
@@ -24,6 +24,7 @@ export class CreateReservationComponent {
   constructor(private reservationService: ReservationService) {}
 
   createReservation(): void {
+    console.log('Reservation Data:', this.reservationData);
     this.reservationService.createReservation(this.reservationData)
       .subscribe(
         (response) => {
@@ -33,5 +34,8 @@ export class CreateReservationComponent {
           console.error('Error while creating reservation:', error);
         }
       );
+  }
+  logFormData(): void {
+    console.log('Reservation Data:', this.reservationData);
   }
 }

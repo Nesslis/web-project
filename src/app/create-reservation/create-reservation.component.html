@@ -22,24 +22,24 @@
       </select>
   
     <label for="dateArrival">Arrival Date:</label>
-    <input type="datetime-local" id="dateArrival" [(ngModel)]="reservationData.dateArrival">
+    <input type="date" id="dateArrival" [(ngModel)]="reservationData.dateArrival" [ngModelOptions]="{standalone: true}">
   
     <label for="dateDeparture">Departure Date:</label>
-    <input type="datetime-local" id="dateDeparture" [(ngModel)]="reservationData.dateDeparture">
+    <input type="date" id="dateDeparture" [(ngModel)]="reservationData.dateDeparture" [ngModelOptions]="{standalone: true}">
   
     <label for="notes">Notes:</label>
-    <textarea id="notes" [(ngModel)]="reservationData.notes"></textarea>
+    <textarea id="notes" [(ngModel)]="reservationData.notes" [ngModelOptions]="{standalone: true}"></textarea>
   
     <label for="source">Source:</label>
-    <input type="text" id="source" [(ngModel)]="reservationData.source">
+    <input type="text" id="source" [(ngModel)]="reservationData.source" [ngModelOptions]="{standalone: true}">
   
     <label for="paymentAmount">Payment Amount:</label>
-    <input type="number" id="paymentAmount" [(ngModel)]="reservationData.paymentAmount">
+    <input type="number" id="paymentAmount" [(ngModel)]="reservationData.paymentAmount" [ngModelOptions]="{standalone: true}">
   
     <label for="status">Status:</label>
-    <input type="text" id="status" [(ngModel)]="reservationData.status">
+    <input type="text" id="status" [(ngModel)]="reservationData.status" [ngModelOptions]="{standalone: true}">
   
-    <button type="submit" class="btn btn-primary">Create Reservation</button>
+    <button type="submit" class="btn btn-primary" (click)="logFormData()">Create Reservation</button>
   </form>
     </div>
     </div>
